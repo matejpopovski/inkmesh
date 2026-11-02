@@ -1,0 +1,19 @@
+{
+  "name": "@inkmesh/protocol",
+  "version": "0.1.0",
+  "description": "Wire messages between inkmesh clients and server, with validation of untrusted input.",
+  "private": true,
+  "type": "module",
+  "license": "MIT",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "dependencies": {
+    "@inkmesh/crdt": "0.1.0"
+  }
+}

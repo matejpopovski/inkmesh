@@ -1,0 +1,21 @@
+{
+  "name": "@inkmesh/server",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "license": "MIT",
+  "scripts": {
+    "dev": "tsx watch src/main.ts"
+  },
+  "dependencies": {
+    "@inkmesh/crdt": "0.1.0",
+    "@inkmesh/protocol": "0.1.0",
+    "better-sqlite3": "12.11.1",
+    "sirv": "3.0.2",
+    "ws": "8.22.1"
+  },
+  "devDependencies": {
+    "@types/better-sqlite3": "7.6.13",
+    "@types/ws": "8.18.1"
+  }
+}

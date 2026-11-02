@@ -1,0 +1,17 @@
+{
+  "extends": "./tsconfig.base.json",
+  "compilerOptions": {
+    "composite": false,
+    "declaration": false,
+    "noEmit": true,
+    "types": ["node"]
+  },
+  "include": [
+    "packages/*/test",
+    "apps/server/test",
+    "apps/web/test",
+    "bench",
+    "e2e",
+    "vitest.config.ts"
+  ]
+}
