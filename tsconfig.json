@@ -3,6 +3,7 @@
   "references": [
     { "path": "packages/crdt" },
     { "path": "packages/protocol" },
+    { "path": "packages/sync" },
     { "path": "apps/server" }
   ]
 }

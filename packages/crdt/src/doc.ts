@@ -180,7 +180,7 @@ export class RecordDoc {
     if (!record || record.tomb) return false;
     record.tomb = [this.issueStamp()];
     record.regs = {};
-    this.order = null;
+    this.dropFromOrder(id);
     this.touch(id, record);
     return true;
   }
@@ -262,8 +262,12 @@ export class RecordDoc {
     }
 
     this.versionVector = joinVectors(this.versionVector, delta.upto);
+    // Most deltas leave the floor alone, and scanning every record for each one would make a
+    // keystroke cost time proportional to the board. Then only a new tombstone can be below it.
+    const floorMoved = !dominates(this.floorVector, delta.floor);
     this.floorVector = joinVectors(this.floorVector, delta.floor);
-    this.purgeBelowFloor(removed);
+    if (floorMoved) this.purgeBelowFloor(removed);
+    else this.purgeEntries(changed, removed);
     this.clock.observe(maxTime(delta.upto));
     return { status: 'applied', changed, removed };
   }
@@ -402,7 +406,7 @@ export class RecordDoc {
       if (!merged) return null;
       record.tomb = merged;
       record.regs = {};
-      this.order = null;
+      this.dropFromOrder(entry.id);
       this.touch(entry.id, record);
       return { id: entry.id, tomb: merged };
     }
@@ -423,6 +427,16 @@ export class RecordDoc {
     return { id: entry.id, regs: won };
   }
 
+  /**
+   * Keeps the cached order valid instead of discarding it. Discarding means the next create scans
+   * every record, tombstones included, which made drawing and erasing quadratic in a board's
+   * lifetime. Scanning `order` is bounded by the live records alone.
+   */
+  private dropFromOrder(id: string): void {
+    const index = this.order?.indexOf(id) ?? -1;
+    if (index >= 0) this.order?.splice(index, 1);
+  }
+
   private touch(id: string, record: RecordState): void {
     record.view = null;
     this.listed = null;
@@ -431,9 +445,18 @@ export class RecordDoc {
 
   private forget(id: string): void {
     this.records.delete(id);
-    this.order = null;
+    this.dropFromOrder(id);
     this.listed = null;
     this.onRecordChange?.(id);
+  }
+
+  private purgeEntries(entries: readonly Entry[], removed: string[]): void {
+    for (const { id, tomb } of entries) {
+      if (tomb?.some((stamp) => covers(this.floorVector, stamp))) {
+        this.forget(id);
+        removed.push(id);
+      }
+    }
   }
 
   private purgeBelowFloor(removed: string[]): void {
@@ -464,6 +487,22 @@ function joinTombstones(current: Tombstone | null, incoming: Tombstone): Tombsto
   const known = new Set(current.map((stamp) => stamp.join()));
   const fresh = incoming.filter((stamp) => !known.has(stamp.join()));
   return fresh.length > 0 ? [...current, ...fresh].sort(compareStamps) : null;
+}
+
+/** Joins two states of one record outside a document, as a local store does on write. */
+export function joinEntries(a: Entry, b: Entry): Entry {
+  if (a.tomb || b.tomb) {
+    return { id: a.id, tomb: joinTombstones(a.tomb ?? null, b.tomb ?? []) ?? a.tomb ?? [] };
+  }
+  const regs: Record<string, Register> = { ...a.regs };
+  for (const name of Object.keys(b.regs ?? {})) {
+    const incoming = b.regs?.[name] as Register;
+    const current = regs[name];
+    if (!current || compareStamps(registerStamp(current), registerStamp(incoming)) < 0) {
+      regs[name] = incoming;
+    }
+  }
+  return { id: a.id, regs };
 }
 
 function sortKeys<T>(object: Readonly<Record<string, T>>): Record<string, T> {

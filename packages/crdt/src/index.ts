@@ -2,6 +2,7 @@ export { HybridClock, hlcFromWallTime, wallTimeFromHlc } from './clock.js';
 export {
   RecordDoc,
   creationStamp,
+  joinEntries,
   type ApplyResult,
   type Delta,
   type DocOptions,

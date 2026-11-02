@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { RecordDoc, hlcFromWallTime, type Delta } from '../src/index.js';
+import { RecordDoc, hlcFromWallTime, joinEntries, type Delta, type Entry } from '../src/index.js';
 
 function pair(now?: () => number): [RecordDoc, RecordDoc] {
   const options = now ? { now } : {};
@@ -395,6 +395,25 @@ describe('tombstone compaction', () => {
     expect(bob.stats().tombstones).toBe(0);
   });
 
+  it('drops a tombstone that arrives after the floor already passed it', () => {
+    const { wall, server, alice, bob } = board();
+    const id = alice.create({});
+    sync(alice, server);
+    sync(server, bob);
+    const bobBefore = bob.versions;
+    alice.remove(id);
+    sync(alice, server);
+    wall.now += 10_000;
+    server.compact(hlcFromWallTime(wall.now));
+
+    // The announcement overtakes the delete, so the floor is already in place when it lands and
+    // does not move again. Nothing else would ever clear this tombstone.
+    bob.adoptFloor(server.floor);
+    bob.applyDelta(alice.deltaSince(bobBefore));
+    expect(bob.get(id)).toBeUndefined();
+    expect(bob.stats().tombstones).toBe(0);
+  });
+
   it('adopts a floor carried on a delta', () => {
     const { wall, server, alice, bob } = board();
     const id = alice.create({});
@@ -407,6 +426,30 @@ describe('tombstone compaction', () => {
     server.compact(hlcFromWallTime(wall.now));
     sync(server, bob);
     expect(bob.stats().tombstones).toBe(0);
+  });
+});
+
+describe('joinEntries', () => {
+  it('matches what a document computes', () => {
+    const [alice, bob] = pair();
+    const id = alice.create({ pos: [0, 0], color: 'ink' });
+    exchange(alice, bob);
+    alice.set(id, { pos: [1, 1] });
+    bob.set(id, { color: 'moss' });
+    const joined = joinEntries(alice.exportRecord(id) as Entry, bob.exportRecord(id) as Entry);
+    exchange(alice, bob);
+    expect(joined.regs).toEqual(alice.exportRecord(id)?.regs);
+  });
+
+  it('lets a tombstone from either side win', () => {
+    const [alice, bob] = pair();
+    const id = alice.create({ pos: [0, 0] });
+    exchange(alice, bob);
+    alice.remove(id);
+    const live = bob.exportRecord(id) as Entry;
+    const dead = alice.exportRecord(id) as Entry;
+    expect(joinEntries(live, dead)).toEqual(dead);
+    expect(joinEntries(dead, live)).toEqual(dead);
   });
 });
 

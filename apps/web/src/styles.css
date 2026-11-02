@@ -1,0 +1,504 @@
+:root {
+  --paper: #f4ead5;
+  --paper-deep: #e9dcbf;
+  --cover: #4a3a2c;
+  --cover-deep: #382b20;
+  --graphite: #2c2520;
+  --graphite-soft: #6c5f52;
+  --ochre: #a8432a;
+  --moss: #4c6b37;
+  --dot: rgba(112, 88, 58, 0.32);
+  --hand: 'Patrick Hand', 'Comic Sans MS', cursive;
+  --script: 'Caveat', 'Comic Sans MS', cursive;
+  /* A rounded box with uneven corners reads as drawn rather than machined. */
+  --drawn-radius: 255px 18px 225px 18px / 18px 225px 18px 255px;
+  --drawn-radius-alt: 18px 225px 18px 255px / 255px 18px 225px 18px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  background: var(--cover);
+  color: var(--graphite);
+  font-family: var(--hand);
+  font-size: 17px;
+  overflow: hidden;
+  overscroll-behavior: none;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+}
+
+.fallback {
+  display: grid;
+  place-items: center;
+  height: 100%;
+  margin: 0;
+  color: var(--paper);
+  font-family: var(--script);
+  font-size: 30px;
+}
+
+.sketchbook {
+  position: relative;
+  display: grid;
+  grid-template-columns: 26px 78px minmax(0, 1fr);
+  height: 100%;
+  padding: 12px 14px 14px 10px;
+  background:
+    radial-gradient(120% 90% at 30% 10%, rgba(255, 230, 190, 0.08), transparent 60%),
+    repeating-linear-gradient(92deg, rgba(0, 0, 0, 0.05) 0 2px, transparent 2px 7px), var(--cover);
+}
+
+/* The wire binding: rings punched down the left edge of the page. */
+.binding {
+  margin: 8px 0;
+  background:
+    radial-gradient(circle at 17px 50%, #1f1812 0 4.5px, transparent 5px),
+    linear-gradient(90deg, transparent 0 3px, #cdbfa8 3px 5px, #8f826d 5px 7px, transparent 7px);
+  background-size: 26px 34px;
+  background-position: 0 6px;
+  border-radius: 6px;
+  opacity: 0.9;
+}
+
+.pencil-case {
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 0;
+  overflow-y: auto;
+  scrollbar-width: none;
+}
+
+.tool-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.tool-group--tight {
+  flex-direction: row;
+  gap: 2px;
+  margin-top: auto;
+}
+
+.tool-group--tight .tool {
+  width: 34px;
+  height: 34px;
+  padding: 5px;
+}
+
+.tool,
+.shade {
+  border: 0;
+  background: transparent;
+  color: var(--paper-deep);
+}
+
+.tool {
+  display: grid;
+  place-items: center;
+  width: 46px;
+  height: 44px;
+  padding: 7px;
+  border-radius: var(--drawn-radius);
+  transition:
+    background-color 120ms ease,
+    transform 120ms ease;
+}
+
+.tool svg,
+.shade svg {
+  width: 100%;
+  height: 100%;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.tool:hover:not(:disabled) {
+  background: rgba(244, 234, 213, 0.13);
+  transform: rotate(-3deg);
+}
+
+.tool[aria-pressed='true'] {
+  background: var(--paper);
+  color: var(--ochre);
+  transform: rotate(-2deg);
+  box-shadow: 2px 3px 0 rgba(0, 0, 0, 0.3);
+}
+
+.tool:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+
+.tool:focus-visible,
+.ink:focus-visible,
+.shade:focus-visible,
+.washi:focus-visible {
+  outline: 2px dashed var(--paper);
+  outline-offset: 2px;
+}
+
+.ink-well {
+  display: grid;
+  grid-template-columns: repeat(2, 24px);
+  gap: 8px;
+  padding: 10px 8px;
+  border-radius: var(--drawn-radius-alt);
+  background: rgba(244, 234, 213, 0.92);
+  box-shadow: 2px 3px 0 rgba(0, 0, 0, 0.28);
+}
+
+/* Each ink is a blot of paint, turned differently so that no two sit alike. */
+.ink {
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  border: 0;
+  background: var(--ink);
+  border-radius: 58% 42% 55% 45% / 46% 56% 44% 54%;
+  transform: rotate(var(--turn));
+  transition: transform 120ms ease;
+}
+
+.ink:hover {
+  transform: rotate(var(--turn)) scale(1.12);
+}
+
+.ink[aria-pressed='true'] {
+  box-shadow:
+    0 0 0 2px var(--paper),
+    0 0 0 3.5px var(--graphite);
+}
+
+.shade {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 58px;
+  padding: 4px 0;
+  border-radius: var(--drawn-radius);
+  font-size: 14px;
+  line-height: 1;
+}
+
+.shade svg {
+  width: 30px;
+  height: 30px;
+}
+
+.shade[aria-pressed='true'] {
+  background: var(--paper);
+  color: var(--ochre);
+  box-shadow: 2px 3px 0 rgba(0, 0, 0, 0.3);
+}
+
+.sheet {
+  position: relative;
+  min-width: 0;
+  overflow: hidden;
+  border-radius: 3px 10px 10px 3px;
+  box-shadow:
+    0 0 0 1px rgba(0, 0, 0, 0.3),
+    5px 6px 0 var(--paper-deep),
+    6px 7px 0 rgba(0, 0, 0, 0.3),
+    10px 11px 0 #dccda9,
+    11px 12px 0 rgba(0, 0, 0, 0.3);
+}
+
+.page {
+  position: absolute;
+  inset: 0;
+  background-color: var(--paper);
+  background-image: radial-gradient(circle, var(--dot) 1px, transparent 1.4px);
+  background-size: 26px 26px;
+}
+
+/* Paper grain, generated rather than shipped as an image. */
+.page::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.32;
+  mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .55 0 0 0 0 .44 0 0 0 0 .28 0 0 0 .5 0'/%3E%3C/filter%3E%3Crect width='220' height='220' filter='url(%23g)'/%3E%3C/svg%3E");
+}
+
+.board {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  touch-action: none;
+  cursor: crosshair;
+}
+
+.page[data-tool='select'] .board {
+  cursor: default;
+}
+
+.page[data-tool='hand'] .board {
+  cursor: grab;
+}
+
+.masthead {
+  position: absolute;
+  top: 12px;
+  left: 20px;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  pointer-events: none;
+}
+
+.masthead h1 {
+  margin: 0;
+  font-family: var(--script);
+  font-size: 38px;
+  font-weight: 600;
+  line-height: 1;
+  color: var(--ochre);
+  transform: rotate(-2deg);
+}
+
+/* A strip of washi tape holding the board's name. */
+.washi {
+  pointer-events: auto;
+  padding: 3px 16px;
+  border: 0;
+  background:
+    repeating-linear-gradient(115deg, rgba(255, 255, 255, 0.34) 0 6px, transparent 6px 13px),
+    #d9a441cc;
+  clip-path: polygon(
+    0 12%,
+    3% 0,
+    97% 4%,
+    100% 16%,
+    98.5% 50%,
+    100% 84%,
+    97% 100%,
+    3% 96%,
+    0 86%,
+    1.5% 50%
+  );
+  transform: rotate(1deg);
+  transition: transform 120ms ease;
+}
+
+.washi:hover {
+  transform: rotate(-1deg);
+}
+
+.corner {
+  position: absolute;
+  top: 12px;
+  right: 16px;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 10px;
+  pointer-events: none;
+}
+
+.stamp {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 136px;
+  padding: 3px 12px 4px;
+  border: 2.5px solid currentColor;
+  border-radius: var(--drawn-radius);
+  color: var(--moss);
+  background: rgba(244, 234, 213, 0.65);
+  transform: rotate(2.5deg);
+  transition: color 200ms ease;
+}
+
+.stamp strong {
+  font-size: 19px;
+  font-weight: 400;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  line-height: 1.15;
+}
+
+.stamp span {
+  font-size: 14px;
+  line-height: 1.1;
+  opacity: 0.85;
+}
+
+.stamp[data-status='offline'] {
+  color: var(--ochre);
+  transform: rotate(-3deg);
+}
+
+.stamp[data-status='connecting'] {
+  color: var(--graphite-soft);
+}
+
+.peers {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 4px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.peer {
+  padding: 0 10px 1px;
+  color: var(--paper);
+  background: var(--peer, var(--graphite));
+  border-radius: 12px 3px 11px 3px / 3px 12px 3px 11px;
+  font-size: 15px;
+  box-shadow: 1px 2px 0 rgba(0, 0, 0, 0.2);
+}
+
+.peer--self {
+  color: var(--graphite-soft);
+  background: transparent;
+  box-shadow: none;
+}
+
+.cursors {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.cursor {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: flex;
+  align-items: flex-start;
+  transition: transform 70ms linear;
+  will-change: transform;
+}
+
+.cursor svg {
+  width: 20px;
+  height: 24px;
+  fill: currentColor;
+  stroke: var(--paper);
+  stroke-width: 1.2;
+  stroke-linejoin: round;
+}
+
+.cursor span {
+  margin: 16px 0 0 -3px;
+  padding: 0 7px 1px;
+  /* The background takes the cursor's colour, so the text needs a fill of its own. */
+  -webkit-text-fill-color: var(--paper);
+  background: currentColor;
+  border-radius: 9px 3px 9px 3px / 3px 9px 3px 9px;
+  font-size: 14px;
+  white-space: nowrap;
+}
+
+.note-editor {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 2;
+  padding: 22px 16px 16px;
+  border: 0;
+  outline: 1.5px dashed var(--ochre);
+  background: transparent;
+  color: var(--graphite);
+  font-family: var(--script);
+  font-size: 25px;
+  font-weight: 600;
+  line-height: 27px;
+  resize: none;
+  transform-origin: 0 0;
+}
+
+.first-page {
+  position: absolute;
+  top: 42%;
+  left: 50%;
+  z-index: 1;
+  width: min(460px, 78%);
+  margin: 0;
+  color: var(--graphite-soft);
+  font-family: var(--script);
+  font-size: 32px;
+  line-height: 1.15;
+  text-align: center;
+  transform: translate(-50%, -50%) rotate(-1.2deg);
+  pointer-events: none;
+}
+
+.first-page small {
+  display: block;
+  margin-top: 10px;
+  font-family: var(--hand);
+  font-size: 17px;
+}
+
+.zoom {
+  position: absolute;
+  right: 16px;
+  bottom: 12px;
+  z-index: 2;
+  color: var(--graphite-soft);
+  font-size: 15px;
+  pointer-events: none;
+}
+
+@media (max-width: 640px) {
+  .sketchbook {
+    grid-template-columns: 64px minmax(0, 1fr);
+    padding: 8px;
+  }
+
+  .binding {
+    display: none;
+  }
+
+  .masthead h1 {
+    font-size: 30px;
+  }
+
+  .washi {
+    display: none;
+  }
+
+  .stamp {
+    min-width: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    transition: none !important;
+  }
+}

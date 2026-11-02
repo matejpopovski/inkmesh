@@ -4,14 +4,15 @@
     "composite": false,
     "declaration": false,
     "noEmit": true,
+    "lib": ["ES2023", "DOM"],
     "types": ["node"]
   },
   "include": [
     "packages/*/test",
     "apps/server/test",
-    "apps/web/test",
     "bench",
     "e2e",
-    "vitest.config.ts"
+    "vitest.config.ts",
+    "playwright.config.ts"
   ]
 }

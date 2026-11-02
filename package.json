@@ -13,7 +13,7 @@
   ],
   "scripts": {
     "build": "tsc -b && npm run build -w @inkmesh/web",
-    "typecheck": "tsc -b && tsc -p tsconfig.check.json",
+    "typecheck": "tsc -b && tsc -p tsconfig.check.json && tsc -p apps/web/tsconfig.json",
     "lint": "eslint . && prettier --check .",
     "format": "prettier --write .",
     "test": "vitest run",
