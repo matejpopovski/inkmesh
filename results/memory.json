@@ -1,0 +1,119 @@
+{
+  "environment": {
+    "cpu": "Apple M3 Max",
+    "cores": 14,
+    "memoryGb": 36,
+    "node": "v20.20.2",
+    "platform": "darwin",
+    "date": "2026-11-02"
+  },
+  "command": "npm run bench",
+  "note": "V8 heap after forced GC, relative to the start of each scenario. Editing and logging are single-threaded in one Node process.",
+  "longHistory": {
+    "records": 1000,
+    "rows": [
+      {
+        "edits": 0,
+        "heapMb": 1.9
+      },
+      {
+        "edits": 10000,
+        "heapMb": 1.77
+      },
+      {
+        "edits": 100000,
+        "heapMb": 1.77
+      },
+      {
+        "edits": 500000,
+        "heapMb": 1.8
+      },
+      {
+        "edits": 1000000,
+        "heapMb": 1.8
+      },
+      {
+        "edits": 2000000,
+        "heapMb": 1.8
+      }
+    ],
+    "stats": {
+      "live": 1000,
+      "tombstones": 0,
+      "registers": 6384,
+      "replicas": 1
+    }
+  },
+  "operationLog": {
+    "records": 1000,
+    "rows": [
+      {
+        "edits": 0,
+        "heapMb": 2.17
+      },
+      {
+        "edits": 10000,
+        "heapMb": 3.22
+      },
+      {
+        "edits": 100000,
+        "heapMb": 16.23
+      },
+      {
+        "edits": 500000,
+        "heapMb": 74.71
+      },
+      {
+        "edits": 1000000,
+        "heapMb": 148.91
+      }
+    ],
+    "retained": 1000000
+  },
+  "churn": {
+    "withoutCompaction": [
+      {
+        "cycles": 0,
+        "heapMb": 0,
+        "tombstones": 0
+      },
+      {
+        "cycles": 50000,
+        "heapMb": 17.43,
+        "tombstones": 50000
+      },
+      {
+        "cycles": 100000,
+        "heapMb": 34.84,
+        "tombstones": 100000
+      },
+      {
+        "cycles": 200000,
+        "heapMb": 69.62,
+        "tombstones": 200000
+      }
+    ],
+    "withCompaction": [
+      {
+        "cycles": 0,
+        "heapMb": 0,
+        "tombstones": 0
+      },
+      {
+        "cycles": 50000,
+        "heapMb": 2.39,
+        "tombstones": 6000
+      },
+      {
+        "cycles": 100000,
+        "heapMb": 2.39,
+        "tombstones": 6000
+      },
+      {
+        "cycles": 200000,
+        "heapMb": 2.4,
+        "tombstones": 6000
+      }
+    ]
+  }
+}

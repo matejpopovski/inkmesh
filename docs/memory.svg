@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 380" role="img" aria-label="Heap under a long edit history on 1,000 records" font-family="ui-sans-serif, system-ui, -apple-system, sans-serif" font-size="13">
+<rect width="720" height="380" fill="#f4ead5"/>
+<text x="74" y="24" font-size="16" font-weight="600" fill="#2c2520">Heap under a long edit history on 1,000 records</text>
+<text x="74" y="370" fill="#6c5f52">V8 heap after forced GC. The log is a plain baseline, not a CRDT library.</text>
+<line x1="74" x2="92" y1="50" y2="50" stroke="#a8432a" stroke-width="2" stroke-linecap="round"/><text x="98" y="54" fill="#2c2520">Registers</text>
+<line x1="244" x2="262" y1="50" y2="50" stroke="#4066b4" stroke-width="2" stroke-linecap="round"/><text x="268" y="54" fill="#2c2520">Operation log</text>
+<line x1="74" x2="570" y1="328" y2="328" stroke="#e0d4bb"/><text x="64" y="332" text-anchor="end" fill="#6c5f52">0 MB</text>
+<line x1="74" x2="570" y1="239.33333333333334" y2="239.33333333333334" stroke="#e0d4bb"/><text x="64" y="243.33333333333334" text-anchor="end" fill="#6c5f52">50 MB</text>
+<line x1="74" x2="570" y1="150.66666666666669" y2="150.66666666666669" stroke="#e0d4bb"/><text x="64" y="154.66666666666669" text-anchor="end" fill="#6c5f52">100 MB</text>
+<line x1="74" x2="570" y1="62" y2="62" stroke="#e0d4bb"/><text x="64" y="66" text-anchor="end" fill="#6c5f52">150 MB</text>
+<text x="74" y="348" text-anchor="middle" fill="#6c5f52">0</text>
+<text x="198" y="348" text-anchor="middle" fill="#6c5f52">0.5M</text>
+<text x="322" y="348" text-anchor="middle" fill="#6c5f52">1M</text>
+<text x="446" y="348" text-anchor="middle" fill="#6c5f52">1.5M</text>
+<text x="570" y="348" text-anchor="middle" fill="#6c5f52">2M</text>
+<text x="570" y="364" text-anchor="end" fill="#6c5f52">edits</text>
+<polyline points="74,324.6306666666666 76.48,324.8612 98.8,324.8612 198,324.808 322,324.808 570,324.808" fill="none" stroke="#a8432a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="74" cy="324.6306666666666" r="4" fill="#a8432a" stroke="#f4ead5" stroke-width="2"/><circle cx="76.48" cy="324.8612" r="4" fill="#a8432a" stroke="#f4ead5" stroke-width="2"/><circle cx="98.8" cy="324.8612" r="4" fill="#a8432a" stroke="#f4ead5" stroke-width="2"/><circle cx="198" cy="324.808" r="4" fill="#a8432a" stroke="#f4ead5" stroke-width="2"/><circle cx="322" cy="324.808" r="4" fill="#a8432a" stroke="#f4ead5" stroke-width="2"/><circle cx="570" cy="324.808" r="4" fill="#a8432a" stroke="#f4ead5" stroke-width="2"/><text x="580" y="328.808" fill="#2c2520">2 MB</text>
+<polyline points="74,324.15186666666665 76.48,322.2898666666667 98.8,299.2188 198,195.51426666666666 322,63.932933333333324" fill="none" stroke="#4066b4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="74" cy="324.15186666666665" r="4" fill="#4066b4" stroke="#f4ead5" stroke-width="2"/><circle cx="76.48" cy="322.2898666666667" r="4" fill="#4066b4" stroke="#f4ead5" stroke-width="2"/><circle cx="98.8" cy="299.2188" r="4" fill="#4066b4" stroke="#f4ead5" stroke-width="2"/><circle cx="198" cy="195.51426666666666" r="4" fill="#4066b4" stroke="#f4ead5" stroke-width="2"/><circle cx="322" cy="63.932933333333324" r="4" fill="#4066b4" stroke="#f4ead5" stroke-width="2"/><text x="332" y="67.93293333333332" fill="#2c2520">149 MB</text>
+</svg>

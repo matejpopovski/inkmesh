@@ -1,0 +1,24 @@
+{
+  "environment": {
+    "cpu": "Apple M3 Max",
+    "cores": 14,
+    "memoryGb": 36,
+    "node": "v20.20.2",
+    "platform": "darwin",
+    "date": "2026-11-02"
+  },
+  "command": "npm run bench",
+  "seed": 20261102,
+  "failures": 0,
+  "seconds": 43,
+  "schedules": 100000,
+  "actions": 9814487,
+  "applied": 1298233,
+  "gaps": 122126,
+  "fullSyncs": 53343,
+  "compactions": 76364,
+  "schedulesWithGap": 44091,
+  "schedulesWithFullSync": 24918,
+  "schedulesWithCompaction": 46020,
+  "maxHealRounds": 2
+}

@@ -1,0 +1,86 @@
+{
+  "environment": {
+    "cpu": "Apple M3 Max",
+    "cores": 14,
+    "memoryGb": 36,
+    "node": "v20.20.2",
+    "platform": "darwin",
+    "date": "2026-11-02"
+  },
+  "command": "npx tsx bench/mutants.ts",
+  "total": 14,
+  "killedByProperties": 12,
+  "killedByAllTests": 14,
+  "rows": [
+    {
+      "name": "always send a delta, never a full state",
+      "killedByProperties": true,
+      "killedByAllTests": true
+    },
+    {
+      "name": "apply deltas that leave a gap",
+      "killedByProperties": true,
+      "killedByAllTests": true
+    },
+    {
+      "name": "accept entries for forgotten records",
+      "killedByProperties": true,
+      "killedByAllTests": true
+    },
+    {
+      "name": "full state does not forget compacted records",
+      "killedByProperties": true,
+      "killedByAllTests": true
+    },
+    {
+      "name": "late edits land inside a tombstone",
+      "killedByProperties": false,
+      "killedByAllTests": true
+    },
+    {
+      "name": "register ties ignore the replica id",
+      "killedByProperties": true,
+      "killedByAllTests": true
+    },
+    {
+      "name": "tombstone keeps only its first stamp",
+      "killedByProperties": true,
+      "killedByAllTests": true
+    },
+    {
+      "name": "tombstone stamps are left unsorted",
+      "killedByProperties": true,
+      "killedByAllTests": true
+    },
+    {
+      "name": "clock ignores what it receives",
+      "killedByProperties": true,
+      "killedByAllTests": true
+    },
+    {
+      "name": "floor from a peer is ignored",
+      "killedByProperties": true,
+      "killedByAllTests": true
+    },
+    {
+      "name": "no purge after adopting a floor",
+      "killedByProperties": true,
+      "killedByAllTests": true
+    },
+    {
+      "name": "a tombstone below the floor is kept when the floor did not move",
+      "killedByProperties": false,
+      "killedByAllTests": true
+    },
+    {
+      "name": "cached order keeps a deleted record",
+      "killedByProperties": true,
+      "killedByAllTests": true
+    },
+    {
+      "name": "tombstone resent only by its first stamp",
+      "killedByProperties": true,
+      "killedByAllTests": true
+    }
+  ]
+}

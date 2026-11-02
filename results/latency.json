@@ -1,0 +1,33 @@
+{
+  "environment": {
+    "cpu": "Apple M3 Max",
+    "cores": 14,
+    "memoryGb": 36,
+    "node": "v20.20.2",
+    "platform": "darwin",
+    "date": "2026-11-02"
+  },
+  "command": "npm run bench",
+  "note": "Loopback, single process, default 40 ms flush. Measures the time from a local write until another replica shows it, so the flush delay is included on purpose.",
+  "rounds": 2000,
+  "editToPeerMs": {
+    "p50": 42.04,
+    "p95": 44.2,
+    "p99": 47.38,
+    "max": 79.57
+  },
+  "joins": [
+    {
+      "records": 100,
+      "joinMs": 3.2
+    },
+    {
+      "records": 1000,
+      "joinMs": 15.8
+    },
+    {
+      "records": 10000,
+      "joinMs": 119
+    }
+  ]
+}

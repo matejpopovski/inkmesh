@@ -1,0 +1,188 @@
+{
+  "environment": {
+    "cpu": "Apple M3 Max",
+    "cores": 14,
+    "memoryGb": 36,
+    "node": "v20.20.2",
+    "platform": "darwin",
+    "date": "2026-11-02"
+  },
+  "command": "npm run bench",
+  "note": "Bytes of the JSON that goes over the socket. Deflated figures use zlib defaults and are for comparison: the server does not currently enable WebSocket compression.",
+  "catchUp": [
+    {
+      "records": 100,
+      "edits": 1,
+      "entries": 1,
+      "deltaBytes": 171,
+      "deltaDeflatedBytes": 114,
+      "fullStateBytes": 64218,
+      "fullStateDeflatedBytes": 17165,
+      "operationLogBytes": 94,
+      "computeMs": 0.26
+    },
+    {
+      "records": 100,
+      "edits": 10,
+      "entries": 8,
+      "deltaBytes": 738,
+      "deltaDeflatedBytes": 213,
+      "fullStateBytes": 63373,
+      "fullStateDeflatedBytes": 16615,
+      "operationLogBytes": 957,
+      "computeMs": 0.08
+    },
+    {
+      "records": 100,
+      "edits": 100,
+      "entries": 62,
+      "deltaBytes": 5084,
+      "deltaDeflatedBytes": 841,
+      "fullStateBytes": 65847,
+      "fullStateDeflatedBytes": 17898,
+      "operationLogBytes": 9543,
+      "computeMs": 0.04
+    },
+    {
+      "records": 100,
+      "edits": 1000,
+      "entries": 100,
+      "deltaBytes": 8137,
+      "deltaDeflatedBytes": 1290,
+      "fullStateBytes": 66165,
+      "fullStateDeflatedBytes": 17998,
+      "operationLogBytes": 95331,
+      "computeMs": 0.03
+    },
+    {
+      "records": 1000,
+      "edits": 1,
+      "entries": 1,
+      "deltaBytes": 174,
+      "deltaDeflatedBytes": 117,
+      "fullStateBytes": 668818,
+      "fullStateDeflatedBytes": 173923,
+      "operationLogBytes": 97,
+      "computeMs": 0.34
+    },
+    {
+      "records": 1000,
+      "edits": 10,
+      "entries": 10,
+      "deltaBytes": 899,
+      "deltaDeflatedBytes": 240,
+      "fullStateBytes": 667518,
+      "fullStateDeflatedBytes": 174314,
+      "operationLogBytes": 957,
+      "computeMs": 0.16
+    },
+    {
+      "records": 1000,
+      "edits": 100,
+      "entries": 94,
+      "deltaBytes": 7646,
+      "deltaDeflatedBytes": 1248,
+      "fullStateBytes": 658431,
+      "fullStateDeflatedBytes": 170328,
+      "operationLogBytes": 9535,
+      "computeMs": 0.19
+    },
+    {
+      "records": 1000,
+      "edits": 1000,
+      "entries": 620,
+      "deltaBytes": 49938,
+      "deltaDeflatedBytes": 7694,
+      "fullStateBytes": 660937,
+      "fullStateDeflatedBytes": 171761,
+      "operationLogBytes": 95388,
+      "computeMs": 0.48
+    },
+    {
+      "records": 10000,
+      "edits": 1,
+      "entries": 1,
+      "deltaBytes": 174,
+      "deltaDeflatedBytes": 118,
+      "fullStateBytes": 6576288,
+      "fullStateDeflatedBytes": 1694758,
+      "operationLogBytes": 97,
+      "computeMs": 2.49
+    },
+    {
+      "records": 10000,
+      "edits": 10,
+      "entries": 10,
+      "deltaBytes": 901,
+      "deltaDeflatedBytes": 245,
+      "fullStateBytes": 6547868,
+      "fullStateDeflatedBytes": 1681209,
+      "operationLogBytes": 959,
+      "computeMs": 6.83
+    },
+    {
+      "records": 10000,
+      "edits": 100,
+      "entries": 100,
+      "deltaBytes": 8124,
+      "deltaDeflatedBytes": 1407,
+      "fullStateBytes": 6591062,
+      "fullStateDeflatedBytes": 1699902,
+      "operationLogBytes": 9532,
+      "computeMs": 2.92
+    },
+    {
+      "records": 10000,
+      "edits": 1000,
+      "entries": 955,
+      "deltaBytes": 76795,
+      "deltaDeflatedBytes": 12266,
+      "fullStateBytes": 6631856,
+      "fullStateDeflatedBytes": 1713941,
+      "operationLogBytes": 95316,
+      "computeMs": 4.26
+    }
+  ],
+  "dragCoalescing": [
+    {
+      "writes": 100,
+      "deltaBytes": 174,
+      "operationLogBytes": 9381
+    },
+    {
+      "writes": 1000,
+      "deltaBytes": 176,
+      "operationLogBytes": 95781
+    },
+    {
+      "writes": 10000,
+      "deltaBytes": 178,
+      "operationLogBytes": 977781
+    },
+    {
+      "writes": 100000,
+      "deltaBytes": 180,
+      "operationLogBytes": 9977781
+    }
+  ],
+  "compactedRejoin": [
+    {
+      "records": 100,
+      "beforeCompaction": 156,
+      "afterCompaction": 61276,
+      "full": true
+    },
+    {
+      "records": 1000,
+      "beforeCompaction": 156,
+      "afterCompaction": 650417,
+      "full": true
+    },
+    {
+      "records": 10000,
+      "beforeCompaction": 156,
+      "afterCompaction": 6576497,
+      "full": true
+    }
+  ]
+}
